@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Structure with a node and a pointer */
+struct node
+{
+int data;
+struct node *next;
+} *rear,*front,*temp,*newNode;
+
+/* Initialising front and rear in empty list */
+void create()
+{
+front = rear = NULL;
+}
+
+/* Function to insert elements in the queue */
+void enqueue(int data)
+{
+newNode = (struct node*) malloc(sizeof(struct node));
+newNode -> data = data;
+newNode -> next = NULL;
+if(rear != NULL)
+{
+rear -> next = newNode;
+rear = newNode;  // Make the new node as REAR
+}
+else
+front = rear = newNode;  // In a empty queue, the inserted element becomes FRONT and REAR
+}
+
+/* Function to dequeue elements in a queue */
+int dequeue()
+{
+int data;
+data = front -> data;
+temp = front;   // Copy FRONT to a temporary node
+front = front -> next;   // Move FRONT to the next node
+free(temp);  // Delete the temporary node
+if(front == NULL)
+rear = NULL;
+return data;
+}
+
+/* Function to check if thw queue is empty */
+int empty()
+{
+if(front == NULL)
+{
+return 1;
+}
+else
+return 0;
+}
+
+/* Function to display elements */
+void display()
+{
+if(empty())
+printf("\nEMPTY QUEUE\n");
+else
+{
+temp = front;
+printf("\nQUEUE ELEMENTS : ");
+while(temp != NULL)
+{
+printf("%d ",temp -> data);
+temp = temp -> next;
+}}}
+
+/* Main Function */
+int main()
+{
+int num,choice;
+while(1)
+{
+printf("\n\nQUEUE OPERATIONS\n\n1.ENQUEUE\n2.DEQUEUE\n3.DISPLAY\n\n");
+scanf("%d",&choice);
+switch (choice)
+{
+case 1:
+printf("\nEnter item : ");
+scanf("%d",&num);
+enqueue(num);
+break;
+case 2:
+if(!(empty()))
+printf("\nDequeued element : %d",dequeue());
+break;
+case 3:
+display();
+break;
+default: exit(0);
+}}
+return 0;
+}
